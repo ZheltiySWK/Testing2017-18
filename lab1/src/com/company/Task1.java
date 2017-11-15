@@ -1,14 +1,33 @@
 package com.company;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.TreeSet;
-import java.util.HashSet;
+import java.util.*;
 import java.io.FileWriter;
 
-
-
 public class Task1 {
+    private static void func(FileWriter file, String text, Collection collection, String method, int value){
+        long start, total;
+
+        start = System.nanoTime();
+        switch (method){
+            case "add":
+                collection.add(value);
+                break;
+            case "contains":
+                collection.contains(value);
+                break;
+            case "remove":
+                collection.remove(value);
+                break;
+            default:
+                System.out.println("Error: func: No such method\n");
+        }
+        total = System.nanoTime() - start;
+        try {file.write(text+": "+total+"\n");
+        }catch (IOException e){
+            System.out.println("IOException");
+        }
+    }
+
     public static void main(String[] args){
         ArrayList<Integer> al = new ArrayList<Integer>();
         LinkedList<Integer> ll = new LinkedList<Integer>();
@@ -24,70 +43,22 @@ public class Task1 {
 
         try (FileWriter output = new FileWriter("outputTask1.txt")){
             output.write("Add time:\n");
-
-            start = System.nanoTime();
-            al.add(100);
-            total = System.nanoTime() - start;
-            output.write("ArrayList: "+total+"\n");
-
-            start = System.nanoTime();
-            ll.add(100);
-            total = System.nanoTime() - start;
-            output.write("LinkedList: "+total+"\n");
-
-            start = System.nanoTime();
-            ts.add(100);
-            total = System.nanoTime() - start;
-            output.write("TreeSet: "+total+"\n");
-
-            start = System.nanoTime();
-            hs.add(100);
-            total = System.nanoTime() - start;
-            output.write("HashSet: "+total+"\n");
+            func(output, "ArrayList", al, "add", 100);
+            func(output, "LinkList", ll, "add", 100);
+            func(output, "TreeSet", ts, "add", 100);
+            func(output, "HashSet", hs, "add", 100);
 
             output.write("\nFind time:\n");
-
-            start = System.nanoTime();
-            al.contains(50);
-            total = System.nanoTime() - start;
-            output.write("ArrayList: "+total+"\n");
-
-            start = System.nanoTime();
-            ll.contains(50);
-            total = System.nanoTime() - start;
-            output.write("LinkedList: "+total+"\n");
-
-            start = System.nanoTime();
-            ts.contains(50);
-            total = System.nanoTime() - start;
-            output.write("TreeSet: "+total+"\n");
-
-            start = System.nanoTime();
-            hs.contains(50);
-            total = System.nanoTime() - start;
-            output.write("HashSet: "+total+"\n");
+            func(output, "ArrayList", al, "contains", 50);
+            func(output, "LinkList", ll, "contains", 50);
+            func(output, "TreeSet", ts, "contains", 50);
+            func(output, "HashSet", hs, "contains", 50);
 
             output.write("\nRemove time:\n");
-
-            start = System.nanoTime();
-            al.remove(51);
-            total = System.nanoTime() - start;
-            output.write("ArrayList: "+total+"\n");
-
-            start = System.nanoTime();
-            ll.remove(51);
-            total = System.nanoTime() - start;
-            output.write("LinkedList: "+total+"\n");
-
-            start = System.nanoTime();
-            ts.remove(50);
-            total = System.nanoTime() - start;
-            output.write("TreeSet: "+total+"\n");
-
-            start = System.nanoTime();
-            hs.remove(50);
-            total = System.nanoTime() - start;
-            output.write("HashSet: "+total+"\n");
+            func(output, "ArrayList", al, "remove", 51);
+            func(output, "LinkList", ll, "remove", 51);
+            func(output, "TreeSet", ts, "remove", 50);
+            func(output, "HashSet", hs, "remove", 50);
 
             output.close();
         }catch (IOException e){
