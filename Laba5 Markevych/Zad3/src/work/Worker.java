@@ -37,7 +37,7 @@ public abstract class Worker implements Comparable <Worker> {
     }
 
     public static LinkedList<Worker> FileRead (String s){
-        List <Worker> l = new LinkedList<Worker>();
+        LinkedList <Worker> l = new LinkedList<Worker>();
         try {BufferedReader fin = new BufferedReader(new FileReader(s));
         String line;
         Pattern p = Pattern.compile("^([a-zA-Z ]+) ([ 0-9]+\\.?[0-9]*)\\((hourly|monthly)\\)$");
