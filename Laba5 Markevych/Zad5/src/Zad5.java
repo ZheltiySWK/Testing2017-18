@@ -17,29 +17,27 @@ public class Zad5 {
             File f = new File(input.nextLine());
             BufferedReader fin = new BufferedReader(new FileReader(f));
             String line;
+
+            System.out.println("Path to file, where sorted text will be put:");
+            FileWriter writer = new FileWriter(input.nextLine(), false);
             while ((line = fin.readLine()) != null) {
                Matcher m = p.matcher(line);
                line = m.replaceAll("_");
                for (String word : line.split( "_"))
                     words.add(word);
-            }
-            words.sort(String.CASE_INSENSITIVE_ORDER);
-
-            Iterator<String> itr = words.iterator();
-            System.out.println("Path to file, where sorted text will be put:");
-            String s = input.nextLine();
-
-            try (FileWriter writer = new FileWriter(s, false)) {
+                words.sort(String.CASE_INSENSITIVE_ORDER);
+                Iterator<String> itr = words.iterator();
                 while (itr.hasNext()) writer.write(itr.next().toString()+" ");
+                writer.write(System.lineSeparator());
                 writer.flush();
+                words.clear();
             }
-            catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-
 
         }
-        catch (Exception ex) {
+        catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        catch (IOException ex) {
             ex.printStackTrace();
         }
 
