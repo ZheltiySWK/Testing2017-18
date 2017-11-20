@@ -27,8 +27,7 @@ public class Zad5 {
 
             Iterator<String> itr = words.iterator();
             System.out.println("Path to file, where sorted text will be put:");
-            BufferedReader reader = new BufferedReader( new InputStreamReader (System.in));
-            String s = reader.readLine();
+            String s = input.nextLine();
 
             try (FileWriter writer = new FileWriter(s, false)) {
                 while (itr.hasNext()) writer.write(itr.next().toString()+" ");
